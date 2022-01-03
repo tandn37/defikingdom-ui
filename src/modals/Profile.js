@@ -8,7 +8,6 @@ const Profile = (props) => {
     profile: PropTypes.object.isRequired,
   }
   const profile = props.profile;
-  console.log('profile', profile);
   return (
     <>
       <Code mt={2} mb={2}>Profile</Code>

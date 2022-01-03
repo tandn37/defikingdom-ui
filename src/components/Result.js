@@ -1,6 +1,6 @@
 
 import {
-  Box, Flex, Container, Input, FormControl, FormLabel, FormHelperText, FormErrorMessage
+  Box
 } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { toETHAddress } from "../common/util";
@@ -19,7 +19,7 @@ const Result = (props) => {
     async function fetchProfile() {
       const res = await getProfile(toETHAddress(props.address));
       setName(res?.profile?.name);
-      setTotalTxs(res?.transactions.length);
+      setTotalTxs(res?.totalTxs);
     }
     fetchProfile();
   }, [props.address]);

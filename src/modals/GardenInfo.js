@@ -1,13 +1,9 @@
 import {
-  Link, Flex, FormLabel, Code,
+  Flex, FormLabel, Code,
 } from "@chakra-ui/react";
 import PropTypes from 'prop-types';
 import {
-  ExternalLinkIcon
-} from "@chakra-ui/icons";
-import {
   fromNativeToken,
-  getAddressUrl,
 } from '../common/util';
 import {
   pools

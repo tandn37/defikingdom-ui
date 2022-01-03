@@ -29,7 +29,6 @@ const TransactionDetail = (props) => {
     detail: PropTypes.object,
   }
   const tx = props.detail;
-  console.log('tx', tx);
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
@@ -88,7 +87,7 @@ const TransactionDetail = (props) => {
             }
             {
               tx.quest &&
-              <Quest quest={tx.quest}></Quest>
+              <Quest quest={tx.quest} jewelPrice={tx.jewelPrice}></Quest>
             }
           </ModalBody>
         </ModalContent>

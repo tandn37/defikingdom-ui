@@ -19,7 +19,7 @@ const Transaction = (props) => {
         <Tr>
           <Th>Type</Th>
           <Th>TxHash</Th>
-          <Th>Block</Th>
+          <Th>USD Change</Th>
           <Th>Time</Th>
         </Tr>
       </Thead>
@@ -32,7 +32,7 @@ const Transaction = (props) => {
                   {tx.type}
                 </Td>
                 <Td><TransactionDetail text={tx.txHash} detail={tx} /></Td>
-                <Td>{tx.block}</Td>
+                <Td>{tx.usd}</Td>
                 <Td>{tx.createdAt}</Td>
               </Tr>
             )

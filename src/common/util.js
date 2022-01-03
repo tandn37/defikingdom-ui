@@ -52,8 +52,9 @@ export const toETHAddress = (address) => {
 export const getTxUrl = (txHash) => `${defaults.explorerEndpoint}/tx/${txHash}`;
 export const getAddressUrl = (address) => `${defaults.explorerEndpoint}/address/${address}`;
 export const fromNativeToken = (number, decimal = 18) => number / (10**decimal);
-export const groupByHeroId = (rewards) => {
+export const formatQuestRewards = (rewards) => {
   return rewards.reduce((acc, r) => {
+    r.jewelPrice = fromNativeToken(r.itemQuantity, r.item.decimal) * (r.priceAsGovernanceToken || 0);
     if (acc[r.hero.id]) {
       acc[r.hero.id].push(r);
     } else {
@@ -61,4 +62,41 @@ export const groupByHeroId = (rewards) => {
     }
     return acc;
   }, {});
+}
+
+export const getJewelPrice = (tx) => {
+  const pair = tx.governanceUSDPair;
+  if (!pair) {
+    return 0;
+  }
+  const reserve0 = fromNativeToken(pair.reserve0, pair.token0.decimal);
+  const reserve1 = fromNativeToken(pair.reserve1, pair.token1.decimal);
+  if (defaults.contractAddresses.jewel === pair.token0.id) {
+    return reserve1 / reserve0;
+  }
+  return reserve0 / reserve1;
+}
+export const getONEPrice = (tx) => {
+  const jewelPrice = tx.jewelPrice;
+  const pair = tx.gasPair;
+  const reserve0 = fromNativeToken(pair.reserve0, pair.token0.decimal);
+  const reserve1 = fromNativeToken(pair.reserve1, pair.token1.decimal);
+  if (defaults.contractAddresses.one === pair.token0.id) {
+    return (reserve1 / reserve0) * jewelPrice;
+  }
+  return (reserve0 / reserve1) * jewelPrice;
+}
+
+export const getTokenPrice = (token, amount, priceAsGovernanceToken, jewelPrice) => {
+  if (!jewelPrice) {
+    return 0;
+  }
+  const tokenAmt = fromNativeToken(amount, token.decimal);
+  if (token.id === defaults.contractAddresses.jewel) {
+    return tokenAmt * jewelPrice;
+  }
+  if (!priceAsGovernanceToken) {
+    return 0;
+  }
+  return tokenAmt * priceAsGovernanceToken * jewelPrice;
 }

@@ -23,8 +23,12 @@ const TokenApproval = (props) => {
         <Flex width='80%'><Link color='teal.500' href={getAddressUrl(tokenApproval.token.id)} isExternal>{tokenApproval.token.name || tokenApproval.token.id} {tokenApproval.token.symbol && `(${tokenApproval.token.symbol})`}<ExternalLinkIcon mx='2px' /></Link></Flex>
       </Flex>
       <Flex>
+        <FormLabel width='20%'>Spender</FormLabel>
+        <Flex width='80%'><Link color='teal.500' href={getAddressUrl(tokenApproval.spender)} isExternal>{tokenApproval.spender}<ExternalLinkIcon mx='2px' /></Link></Flex>
+      </Flex>
+      <Flex>
         <FormLabel width='20%'>Amount</FormLabel>
-        <Flex width='80%'>{tokenApproval.amount.length > 50 ? 'Infinity' : fromNativeToken(tokenApproval.amount, tokenApproval.token.decimal)}</Flex>
+        <Flex width='80%'>{tokenApproval.amount.length > 50 ? 'All' : fromNativeToken(tokenApproval.amount, tokenApproval.token.decimal)}</Flex>
       </Flex>
     </>
   )

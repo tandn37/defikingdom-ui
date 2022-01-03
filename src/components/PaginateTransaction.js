@@ -21,9 +21,8 @@ const PaginateTransaction = (props) => {
       const res = await getAccountTransactions(props.address, first, skip);
       setTxs(res);
     }
-    const endOffset = itemOffset + props.itemsPerPage;
-    fetchTxs(props.itemsPerPage, endOffset);
-  }, [itemOffset]);
+    fetchTxs(props.itemsPerPage, itemOffset);
+  }, [itemOffset, props.address, props.itemsPerPage]);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * props.itemsPerPage) % props.total;

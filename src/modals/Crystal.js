@@ -6,7 +6,6 @@ import {
   ExternalLinkIcon
 } from "@chakra-ui/icons";
 import {
-  fromNativeToken,
   getAddressUrl,
 } from '../common/util';
 import defaults from '../common/defaults';

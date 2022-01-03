@@ -9,9 +9,7 @@ const getProfile = async (address) => {
 			profile {
 				name
 			}
-			transactions {
-				id
-			}
+			totalTxs
 		}
 	}
 	`;
@@ -27,7 +25,6 @@ const getProfile = async (address) => {
 }
 
 const getAccountTransactions = async (address, first, skip) => {
-	console.log('address', address);
 	const query = `
 		{
 			transactions(first: ${first}, skip: ${skip}, orderBy: block, orderDirection: desc, where:{ player:"${address}" }) {
@@ -86,6 +83,7 @@ const getAccountTransactions = async (address, first, skip) => {
 							decimal
 						}
 						itemQuantity
+						priceAsGovernanceToken
 					}
 				}
 				auction {
@@ -162,6 +160,7 @@ const getAccountTransactions = async (address, first, skip) => {
 							name
 						}
 					}
+					priceAsGovernanceToken
 					value
 				}
 				heroTransfer {
@@ -253,71 +252,7 @@ const getAccountTransactions = async (address, first, skip) => {
 	try {
 		const result = await queryGraphQL(query, defaults.graphqlEndpoint);
 		if (result) {
-			const r ={
-					type: 'Quest',
-					txHash: '0x1238109381209380918590829058',
-					block: 19360752,
-					contractAddress: "0x3e81154912e5e2cc9b10ad123bf14aeb93ae5318",
-					createdAt: "11/12/2021, 11:41:07 PM",
-					quest: {
-						type: 'Quest',
-						startTime: 1641143419,
-						status: 'Completed',
-						completeAtTime: 1641143419,
-						attempts: 5,
-						address: '0x3132c76acf2217646fb8391918d28a16bd8a8ef4',
-						heroes: [{ id: '2323' }, {id: '23235' }],
-						questRewards: [{
-							hero: {
-								id: 10
-							},
-							item: {
-								id: '0x95d02c1dc58f05a015275eb49e107137d9ee81dc',
-								name: 'Bloater',
-								decimal: 0
-							},
-							itemQuantity: 10
-						},
-						{
-							hero: {
-								id: 10
-							},
-							item: {
-								id: '0x9678518e04fe02fb30b55e2d0e554e26306d0892',
-								name: 'GreyEgg',
-								decimal: 0
-							},
-							itemQuantity: 2
-						},
-						{
-							hero: {
-								id: 11
-							},
-							item: {
-								id: '0x9678518e04fe02fb30b55e2d0e554e26306d0892',
-								name: 'YelloEgg',
-								decimal: 0
-							},
-							itemQuantity: 5
-						},
-						{
-							hero: {
-								id: 11
-							},
-							item: {
-								id: '0x9678518e04fe02fb30b55e2d0e554e26306d0892',
-								name: 'GreeEgg',
-								decimal: 0
-							},
-							itemQuantity: 1
-						}
-						]
-					},
-					
-				}
-			;
-			const a = result.transactions.concat(r);
-			return handle(a || []);
+			return handle(result.transactions || []);
 		}
 	}
 	catch (err) {

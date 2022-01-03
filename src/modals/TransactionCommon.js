@@ -39,8 +39,15 @@ const TransactionCommon = (props) => {
       </Flex>
       <Flex>
         <FormLabel width='20%'>Gas</FormLabel>
-        <Flex width='80%'>0.01 ONE</Flex>
+        <Flex width='80%'>{tx.gasFee} ONE ({tx.gasFeeUSD} USD)</Flex>
       </Flex>
+      {
+        tx.jewelPrice > 0 &&
+        <Flex>
+          <FormLabel width='20%'>Jewel Price</FormLabel>
+          <Flex width='80%'>{tx.jewelPrice} USD</Flex>
+        </Flex>
+      }
     </>
   )
 }

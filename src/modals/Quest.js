@@ -16,9 +16,9 @@ import {
 const Quest = (props) => {
   Quest.propTypes = {
     quest: PropTypes.object.isRequired,
+    jewelPrice: PropTypes.any,
   }
   const quest = props.quest;
-  console.log('quest', quest);
   return (
     <>
       <Code mt={2} mb={2}>Quest</Code>
@@ -63,7 +63,7 @@ const Quest = (props) => {
                       quest.questRewards[heroId].map((r) => {
                         return (
                           <Flex>
-                            {fromNativeToken(r.itemQuantity, r.item.decimal)}<Link ml={1} color='teal.500' href={getAddressUrl(r.item.id)} isExternal>{r.item.name}<ExternalLinkIcon mx='2px' /></Link>
+                            {fromNativeToken(r.itemQuantity, r.item.decimal)}<Link ml={1} color='teal.500' href={getAddressUrl(r.item.id)} isExternal>{r.item.name}<ExternalLinkIcon mx='2px' /></Link>({r.jewelPrice * props.jewelPrice})
                           </Flex>
                         )
                       })

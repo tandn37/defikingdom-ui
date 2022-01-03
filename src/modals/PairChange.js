@@ -15,7 +15,6 @@ const PairChange = (props) => {
     pairChange: PropTypes.object.isRequired,
   }
   const pairChange = props.pairChange;
-  console.log('pairChange', pairChange);
   return (
     <>
       <Code mt={2} mb={2}>{pairChange.type === 'Swap' ? 'Swap' : 'Liquidity'}</Code>
